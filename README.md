@@ -4,7 +4,7 @@
 
 ## Работающий сайт
 
-- [Ссылка на сайт](https://galactic-news.example.com/)
+- [Ссылка на сайт](https://galactic-news.alwaysdata.net/)
 
 ## Структура
 
