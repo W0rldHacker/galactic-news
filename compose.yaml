@@ -1,0 +1,35 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: galactic_news
+      DB_USER: news
+      DB_PASSWORD: news
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/var/www/html:ro
+
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: galactic_news
+      MYSQL_USER: news
+      MYSQL_PASSWORD: news
+      MYSQL_ROOT_PASSWORD: root
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -proot --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - ./news.sql:/docker-entrypoint-initdb.d/news.sql:ro
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
